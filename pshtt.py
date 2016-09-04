@@ -258,11 +258,14 @@ def hsts_check(endpoint):
         endpoint.hsts = False
         return
 
+    # TODO: replace with Hsts.parse(header),
+    # If invalid, return and move on. Otherwise:
+    # Store header, max-age, includeSubDomains, preload.
+    # Store whether HSTS is enabled.
+    # Return data.
+
     endpoint.hsts = True
     endpoint.hsts_header = header
-
-    # Set max age to the string after max-age
-    # TODO: make this more resilient to pathological HSTS headers.
 
     # handle multiple HSTS headers, requests comma-separates them
     first_pass = re.split(',\s?', header)[0]
